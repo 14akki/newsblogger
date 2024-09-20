@@ -133,3 +133,4 @@ dist
 # my project ignore files and folders
 /package-lock.json
 /package.json
+/public/images

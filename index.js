@@ -9,7 +9,7 @@ const isBlogExist = require('./middleware/blogExist')
 
 const adminRoute = require('./routes/admin.route')
 
-
+const userRoute = require('./routes/user.route');
 
 
 
@@ -24,6 +24,7 @@ app.use(isBlogExist.isBlogExistorNot);
 
 app.use('/', adminRoute);
 
+app.use('/', userRoute);
 
 
 
