@@ -9,7 +9,7 @@ const blogSchema = mongoose.Schema({
         type: String,
         required: true,
     },
-    blog_image: {  
+    blog_logo: {  
         type: String,
         required: true,
     }

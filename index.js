@@ -2,6 +2,11 @@ const express = require('express');
 const mongoose = require('mongoose');
 const app = express();
 require('dotenv').config();
+
+//requires-
+
+const isBlogExist = require('./middleware/blogExist')
+
 const adminRoute = require('./routes/admin.route')
 
 
@@ -13,9 +18,16 @@ const adminRoute = require('./routes/admin.route')
 
 
 
-// routes
+// global mount-
+
+app.use(isBlogExist.isBlogExistorNot);
+
 app.use('/', adminRoute);
 
+
+
+
+//root route
 app.get('/', (req, res) => {
     res.send("This is NEWSBLOGGER APP project");
 });
