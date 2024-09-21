@@ -18,6 +18,7 @@ const userRoute = require('./routes/user.route');
 
 
 
+
 // global mount-
 
 app.use(isBlogExist.isBlogExistorNot);
@@ -25,6 +26,7 @@ app.use(isBlogExist.isBlogExistorNot);
 app.use('/', adminRoute);
 
 app.use('/', userRoute);
+
 
 
 

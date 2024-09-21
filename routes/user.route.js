@@ -5,6 +5,7 @@ const session = require('express-session');
 const sessionSecretKey = process.env.SESSION_SECRET_KEY;
 
 const userController = require('../controller/user.controller')
+const adinLoginAuth = require('../middleware/adminLoginAuth');
 
 const bodyParser = require('body-parser');
 user_router.use(bodyParser.json())
@@ -21,7 +22,9 @@ user_router.use(session({
     cookie: { secure: true },
 }))
 
-user_router.get('/login', userController.loginLoader);
+
+
+user_router.get('/login', adinLoginAuth.isLogout, userController.loginLoader);
 
 user_router.post('/login', userController.verfiyLogin);
 
