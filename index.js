@@ -11,7 +11,20 @@ const adminRoute = require('./routes/admin.route')
 
 const userRoute = require('./routes/user.route');
 
+const session = require('express-session');
+const sessionSecretKey = process.env.SESSION_SECRET_KEY;
 
+// Middleware: Body parsing 
+app.use(express.urlencoded({ extended: true })); 
+app.use(express.json()); 
+ 
+// Session middleware - should be loaded before routes 
+app.use(session({ 
+    secret: sessionSecretKey,
+    resave: false, 
+    saveUninitialized: true, 
+    cookie: { secure: false }  // Set to true if using HTTPS 
+}));
 
 
 

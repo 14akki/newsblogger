@@ -1,4 +1,4 @@
-const isLogin = async (req, res, next) => {
+const isLogin = (req, res, next) => {
     
     try {
         if (req.session.user_id && req.session.is_admin == 1) {
@@ -13,7 +13,7 @@ const isLogin = async (req, res, next) => {
 }
 
 
-const isLogout = async (req, res, next) => {
+const isLogout =  (req, res, next) => {
     try {
         if (req.session.user_id && req.session.is_admin == 1) {
             res.redirect('/dashboard');
