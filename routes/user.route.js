@@ -1,8 +1,8 @@
 const express = require('express');
 const user_router = express();
 require('dotenv').config();
-const session = require('express-session');
-const sessionSecretKey = process.env.SESSION_SECRET_KEY;
+// const session = require('express-session');
+// const sessionSecretKey = process.env.SESSION_SECRET_KEY;
 
 const userController = require('../controller/user.controller')
 const adinLoginAuth = require('../middleware/adminLoginAuth');
@@ -27,6 +27,8 @@ user_router.set('views', './views');
 user_router.get('/login', adinLoginAuth.isLogout, userController.loginLoader);
 
 user_router.post('/login', userController.verfiyLogin);
+
+user_router.get('/logout', adinLoginAuth.isLogin , userController.logout);
 
 user_router.get('/profile', userController.profile);
 

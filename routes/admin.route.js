@@ -34,11 +34,10 @@ const adminController = require('../controller/admin.controller');
 const adminLoginAuth = require('../middleware/adminLoginAuth');
 
 admin_router.get('/blog-setup', adminController.blogSetup);
-
 admin_router.post('/blog-setup', upload.single('blog_logo'), adminController.blogSetupSave)
-
 admin_router.get('/')
-
-admin_router.get('/dashboard', adminLoginAuth.isLogin ,adminController.dashboard);
+admin_router.get('/dashboard', adminLoginAuth.isLogin, adminController.dashboard);
+admin_router.get('/create-post', adminLoginAuth.isLogin, adminController.loadPostdashboard)
+admin_router.post('/create-post', adminLoginAuth.isLogin, adminController.addPost);
 
 module.exports = admin_router;
