@@ -32,6 +32,8 @@ user_router.get('/logout', adinLoginAuth.isLogin , userController.logout);
 
 user_router.get('/profile', userController.profile);
 
+user_router.get('/forget-password', adinLoginAuth.isLogin, userController.forgetLoad);
+
 
 
 

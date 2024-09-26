@@ -1,5 +1,10 @@
 const userSchema = require('../model/user.schema');
 const bcrypt = require('bcrypt');
+const randomstring = require('randomstring');
+const nodemailer = require('nodemailer');
+require('dotenv').config();
+emailUser = process.env.EMAIL_USER;
+emailPassword = process.env.EMAIL_PASSWORD;
 
 
 const loginLoader = async (req, res) => {
@@ -59,7 +64,13 @@ const logout = async (req, res) => {
     }
 }
 
-
+const forgetLoad = (req, res)=>{
+    try{
+        res.render('forget-password');
+    }catch(error){
+        console.log(error);
+    }
+}
 
 
 module.exports = {
@@ -67,5 +78,6 @@ module.exports = {
     verfiyLogin,
     profile,
     logout,
+    forgetLoad ,
 }
 
