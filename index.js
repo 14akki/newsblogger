@@ -5,24 +5,25 @@ require('dotenv').config();
 
 //requires-
 
-const isBlogExist = require('./middleware/blogExist')
-
-const adminRoute = require('./routes/admin.route')
-
+const isBlogExist = require('./middleware/blogExist');
+const adminRoute = require('./routes/admin.route');
 const userRoute = require('./routes/user.route');
+const blogRoute = require('./routes/blog.route');
+
 
 const session = require('express-session');
 const sessionSecretKey = process.env.SESSION_SECRET_KEY;
 
 // Middleware: Body parsing 
-app.use(express.urlencoded({ extended: true })); 
-app.use(express.json()); 
- 
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+
+
 // Session middleware - should be loaded before routes 
-app.use(session({ 
+app.use(session({
     secret: sessionSecretKey,
-    resave: false, 
-    saveUninitialized: true, 
+    resave: false,
+    saveUninitialized: true,
     cookie: { secure: false }  // Set to true if using HTTPS 
 }));
 
@@ -35,10 +36,11 @@ app.use(session({
 // global mount-
 
 app.use(isBlogExist.isBlogExistorNot);
-
 app.use('/', adminRoute);
-
 app.use('/', userRoute);
+app.use('/', blogRoute);
+
+
 
 
 
