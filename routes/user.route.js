@@ -5,7 +5,7 @@ require('dotenv').config();
 // const sessionSecretKey = process.env.SESSION_SECRET_KEY;
 
 const userController = require('../controller/user.controller')
-const adinLoginAuth = require('../middleware/adminLoginAuth');
+const adminLoginAuth = require('../middleware/adminLoginAuth');
 
 // const bodyParser = require('body-parser');
 // user_router.use(bodyParser.json())
@@ -24,15 +24,21 @@ user_router.set('views', './views');
 
 
 
-user_router.get('/login', adinLoginAuth.isLogout, userController.loginLoader);
+user_router.get('/login', adminLoginAuth.isLogout, userController.loginLoader);
 
 user_router.post('/login', userController.verfiyLogin);
 
-user_router.get('/logout', adinLoginAuth.isLogin , userController.logout);
+user_router.get('/logout', adminLoginAuth.isLogin, userController.logout);
 
 user_router.get('/profile', userController.profile);
 
-user_router.get('/forget-password', adinLoginAuth.isLogin, userController.forgetLoad);
+user_router.get('/forget-password', adminLoginAuth.isLogout, userController.forgetLoad);
+
+user_router.post('/forget-password', userController.forgetPasswordVerify);
+
+user_router.get('/reset-password', adminLoginAuth.isLogout, userController.resetPasswordLoad);
+
+user_router.post('/reset-passord', userController.resetPassword);
 
 
 
