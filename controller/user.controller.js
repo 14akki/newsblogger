@@ -76,7 +76,7 @@ const forgetLoad = (req, res) => {
 const forgetPasswordVerify = async (req, res) => {
     try {
         const email = req.body.email;
-        const userData = await userSchema.find({ email: email });
+        const userData = await userSchema.findOne({ email: email });
 
         if (userData) {
             const generatedToken = randomstring.generate();
@@ -99,7 +99,7 @@ const forgetPasswordVerify = async (req, res) => {
 const sendResetPasswordMail = async (name, email, token) => {
     try {
         const transport = nodemailer.createTransport({
-            host: 'smtp.gmail.com',
+            host: "smtp.gmail.com",
             port: 587,
             secure: false,
             requireTLS: true,
@@ -143,18 +143,21 @@ const resetPasswordLoad = async (req, res) => {
     }
 }
 
+
 const resetPassword = async (req, res) => {
+    
     try {
         const password = req.body.password;
         const user_id = req.body.user_id;
-        const securePassword = await adminController.securePassword(password);
-        userSchema.findByIdAndUpdate({ _id: user_id }, { $set: { password: securePassword, token: '' } });
-
+        const securepassword = await adminController.securePassword(password);
+        userSchema.findByIdAndUpdate({ _id: user_id }, { $set: { password: securepassword, token: '' } });
+       
         res.redirect('/login');
     } catch (error) {
         res.render('404')
     }
 }
+
 
 
 

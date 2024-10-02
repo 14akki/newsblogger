@@ -11,21 +11,21 @@ const userRoute = require('./routes/user.route');
 const blogRoute = require('./routes/blog.route');
 
 
-const session = require('express-session');
-const sessionSecretKey = process.env.SESSION_SECRET_KEY;
+// const session = require('express-session');
+// const sessionSecretKey = process.env.SESSION_SECRET_KEY;
 
-// Middleware: Body parsing 
-app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
+// // Middleware: Body parsing 
+// app.use(express.urlencoded({ extended: true }));
+// app.use(express.json());
 
 
 // Session middleware - should be loaded before routes 
-app.use(session({
-    secret: sessionSecretKey,
-    resave: false,
-    saveUninitialized: true,
-    cookie: { secure: false }  // Set to true if using HTTPS 
-}));
+// app.use(session({
+//     secret: sessionSecretKey,
+//     resave: false,
+//     saveUninitialized: true,
+//     cookie: { secure: false }  // Set to true if using HTTPS 
+// }));
 
 
 
@@ -45,18 +45,14 @@ app.use('/', blogRoute);
 
 
 
+
+
+
+
 //root route
 app.get('/', (req, res) => {
     res.send("This is NEWSBLOGGER APP project");
 });
-
-
-
-
-
-
-
-
 
 // Mongoose connection
 const databaseUrl = process.env.DATABASE_URL;

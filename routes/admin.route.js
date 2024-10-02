@@ -16,6 +16,23 @@ const multer = require('multer');
 const path = require('path');
 admin_router.use(express.static('public'));
 
+const session = require('express-session');
+const sessionSecretKey = process.env.SESSION_SECRET_KEY;
+
+// Middleware: Body parsing 
+admin_router.use(express.urlencoded({ extended: true }));
+admin_router.use(express.json());
+
+
+// Session middleware - should be loaded before routes 
+admin_router.use(session({
+    secret: sessionSecretKey,
+    resave: false,
+    saveUninitialized: true,
+    cookie: { secure: false }  // Set to true if using HTTPS 
+}));
+
+
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
         cb(null, path.join(__dirname, '../public/images'));
