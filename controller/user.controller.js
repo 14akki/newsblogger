@@ -1,4 +1,4 @@
-const userSchema = require('../model/user.schema');
+const user = require('../model/user.schema');
 const adminController = require('../controller/admin.controller')
 const bcrypt = require('bcrypt');
 const randomstring = require('randomstring');
@@ -21,7 +21,7 @@ const verfiyLogin = async (req, res) => {
         const email = req.body.email;
         const password = req.body.password;
 
-        const userData = await userSchema.findOne({ email: email });
+        const userData = await user.findOne({ email: email });
 
         if (userData) {
             const passwordMatch = await bcrypt.compare(password, userData.password);
@@ -76,12 +76,12 @@ const forgetLoad = (req, res) => {
 const forgetPasswordVerify = async (req, res) => {
     try {
         const email = req.body.email;
-        const userData = await userSchema.findOne({ email: email });
+        const userData = await user.findOne({ email: email });
 
         if (userData) {
             const generatedToken = randomstring.generate();
 
-            await userSchema.updateOne({ email: email }, { $set: { token: generatedToken } });
+            await user.updateOne({ email: email }, { $set: { token: generatedToken } });
 
             sendResetPasswordMail(userData.name, userData.email, generatedToken);
 
@@ -130,7 +130,7 @@ const sendResetPasswordMail = async (name, email, token) => {
 const resetPasswordLoad = async (req, res) => {
     try {
         const token = req.query.token;
-        const tokenBasedData = await userSchema.findOne({ token: token });
+        const tokenBasedData = await user.findOne({ token: token });
 
         if (tokenBasedData) {
             res.render('reset-password', { user_id: tokenBasedData._id });
@@ -145,18 +145,23 @@ const resetPasswordLoad = async (req, res) => {
 
 
 const resetPassword = async (req, res) => {
-    
+
     try {
         const password = req.body.password;
         const user_id = req.body.user_id;
-        const securepassword = await adminController.securePassword(password);
-        userSchema.findByIdAndUpdate({ _id: user_id }, { $set: { password: securepassword, token: '' } });
-       
+        //(The code was not working due to line no-"await adminController.securePassword(password)" but it worked directly when used with bcrypt)
+        // const securepassword = await adminController.securePassword(password);
+        const securepassword = await bcrypt.hash(password, 10); 
+        await user.findByIdAndUpdate({ _id: user_id }, { $set: { password: securepassword, token: '' } });
+
         res.redirect('/login');
     } catch (error) {
         res.render('404')
     }
 }
+
+
+
 
 
 

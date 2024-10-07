@@ -38,7 +38,7 @@ user_router.post('/forget-password', userController.forgetPasswordVerify);
 
 user_router.get('/reset-password', adminLoginAuth.isLogout, userController.resetPasswordLoad);
 
-user_router.post('/reset-passord', userController.resetPassword);
+user_router.post('/reset-password', userController.resetPassword);
 
 
 
